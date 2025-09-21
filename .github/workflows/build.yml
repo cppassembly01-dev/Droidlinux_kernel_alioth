@@ -20,8 +20,9 @@ jobs:
         zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev \
         libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig bc libssl-dev
 
-    - name: Setup toolchains
+    - name: Setup environment and toolchains
       run: |
+        # Create toolchains directory
         mkdir -p $HOME/toolchains
         cd $HOME/toolchains
         
@@ -36,18 +37,19 @@ jobs:
         mkdir arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu
         tar -xf arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz -C arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu
         rm arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz
-
-    - name: Setup KernelSU and SUSFS
-      run: |
+        
+        # Setup KernelSU and SUSFS
         curl -LSs https://raw.githubusercontent.com/cppassembly01-dev/alioth_ath9k_htc/main/SUSFS/setup.sh | bash -
 
     - name: Build kernel
-      env:
-        PATH: $HOME/toolchains/clang-r547379/bin:$HOME/toolchains/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH
-        LINKER: ld.lld
-        KBUILD_BUILD_USER: akronnos
-        KBUILD_BUILD_HOST: nethunter
       run: |
+        # Set environment variables
+        export PATH="$HOME/toolchains/clang-r547379/bin:$HOME/toolchains/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH"
+        export LINKER=ld.lld
+        export KBUILD_BUILD_USER=akronnos
+        export KBUILD_BUILD_HOST=nethunter
+        
+        # Build the kernel
         make O=out ARCH=arm64 SUBARCH=arm64 LLVM=1 LLVM_IAS=1 CLANG_TRIPLE=aarch64-linux-gnu- \
         CROSS_COMPILE=aarch64-none-linux-gnu- alioth_defconfig vendor/nethunter.config vendor/linux.config
         
