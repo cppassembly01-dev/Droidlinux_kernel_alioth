@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@latest
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -61,7 +61,7 @@ jobs:
         zip -r9 "Droidlinux_kernel_alioth.zip" *
 
     - name: Upload artifact
-      uses: actions/upload-artifact@latest
+      uses: actions/upload-artifact@v4
       with:
         name: Droidlinux_kernel_alioth
         path: AnyKernel3/Droidlinux_kernel_alioth.zip
