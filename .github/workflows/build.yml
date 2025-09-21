@@ -1,7 +1,7 @@
 name: Build Droidlinux Kernel
 
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,12 +13,12 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Setup environment
+    - name: Install build dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y git-core gnupg flex bison build-essential zip curl \
+        sudo apt-get install -y make git-core gnupg flex bison build-essential zip curl \
         zlib1g-dev libc6-dev-i386 x11proto-core-dev libx11-dev lib32z1-dev \
-        libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig bc libssl-dev make
+        libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig bc libssl-dev
 
     - name: Setup toolchains
       run: |
