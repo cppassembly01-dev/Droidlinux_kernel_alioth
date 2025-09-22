@@ -37,12 +37,12 @@ jobs:
         mkdir arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu
         tar -xf arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz -C arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu
         rm arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz
-        
-        # Setup KernelSU and SUSFS
-        curl -LSs https://raw.githubusercontent.com/cppassembly01-dev/alioth_ath9k_htc/main/SUSFS/setup.sh | bash -
 
     - name: Build kernel
       run: |
+        # Setup KernelSU and SUSFS
+        curl -LSs https://raw.githubusercontent.com/cppassembly01-dev/alioth_ath9k_htc/main/SUSFS/setup.sh | bash -
+        
         # Set environment variables
         export PATH="$HOME/toolchains/clang-r547379/bin:$HOME/toolchains/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH"
         export LINKER=ld.lld
