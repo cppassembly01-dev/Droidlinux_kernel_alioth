@@ -3333,3 +3333,7 @@ void __weak init_task_runtime_info(struct task_struct *tsk)
 	return;
 }
 #endif
+
+#ifdef CONFIG_CFS_BANDWIDTH
+extern u64 max_cfs_runtime;
+#endif
