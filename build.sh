@@ -12,15 +12,13 @@ HOST_ARCH=`arch`
 
 if [ $HOST_ARCH == x86_64 ]; then
 clang=clang-r547379
-CLANG=$toolchains/$clang/bin
-fi
+CLANG=$workdir/$clang/bin; fi
 
-elif [ $HOST_ARCH == aarch64 ]; then
-CLANG=$toolchains/
-fi
+if [ $HOST_ARCH == aarch64 ]; then
+CLANG=$workdir; fi
 
 gcc=14.3.rel1
-GCC=$toolchains/arm-gnu-toolchain-$gcc-$HOST_ARCH-aarch64-none-linux-gnu/bin
+GCC=$workdir/arm-gnu-toolchain-$gcc-$HOST_ARCH-aarch64-none-linux-gnu/bin
 
 kernel_source=https://github.com/cppassembly01-dev/Droidlinux_kernel_alioth
 kernel_root=~/Droidlinux_kernel_alioth
@@ -32,7 +30,7 @@ export KBUILD_BUILD_HOST=nethunter
 
 ### Clang toolchain ###
 if [ $HOST_ARCH == x86_64 ]; then
-cd $toolchains
+cd $workdir
 wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android16-release/clang-r547379.tar.gz
 mkdir $clang
 tar -xvf $clang.tar.gz -C $clang
